@@ -725,7 +725,7 @@ def pareto_callback(cache_run, model, tokenizer, x_penalty_min, x_penalty_max):
     def f(i, state, last_runtime, history, final=False):
         if last_runtime is not None:
             print("runtime: {:.2f} seconds".format(last_runtime))
-        print(f"\nbeginning step {i}, current pareto frontier inputs:")
+        print(f"\nbeginning step {i}, current pareto frontier prompts:")
         last_idx = None
 
         Xvs = torch.exp(

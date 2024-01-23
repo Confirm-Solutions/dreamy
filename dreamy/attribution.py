@@ -158,13 +158,13 @@ def viz(
 
 @torch.no_grad()
 def resample(model, cache_run: Callable, input_ids, k=range(64), batch_size=256):
-    from dreamy.epo import _token_grads
+    from dreamy.epo import token_grads
 
     if len(input_ids.shape) > 1:
         raise ValueError("input_ids must be a 1D tensor of token IDs")
 
     x_penalty = torch.zeros((input_ids.shape[0],), device=input_ids.device)
-    output = _token_grads(
+    output = token_grads(
         model,
         cache_run,
         input_ids.unsqueeze(0),
