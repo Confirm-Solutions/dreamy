@@ -458,13 +458,13 @@ def build_pareto_frontier(tokenizer, histories, Xvs=None):
     pareto_text = [tokenizer.decode(ids) for ids in pareto_ids]
     return ParetoFrontier(
         np.array(Xvs),
+        pareto_t,
+        pareto_x,
+        pareto_unique,
         pareto_t[pareto_unique],
         pareto_x[pareto_unique],
         pareto_ids,
         pareto_text,
-        pareto_unique,
-        pareto_t,
-        pareto_x,
     )
 
 
@@ -506,6 +506,11 @@ def gcg(
         callback=callback,
         always_recompute_gradients=always_recompute_gradients,
     )
+
+
+########################################
+# Private implementation details below here.
+########################################
 
 
 def cat_if_not_none(a, b):
@@ -737,7 +742,7 @@ def pareto_callback(cache_run, model, tokenizer, x_penalty_min, x_penalty_max):
             text = tokenizer.decode(state.ids[idx])
             last_token = tokenizer.decode(state.final_token[idx])
             print(
-                f"{Xvs[i]} xentropy={state.xentropy[idx]:.2f} target={state.target[idx]:.2f} {repr(text + '[' + last_token + ']')}"
+                f"penalty={Xvs[i]:.2f} xentropy={state.xentropy[idx]:.2f} target={state.target[idx]:.2f} {repr(text + '[' + last_token + ']')}"
             )
             last_idx = idx
 
