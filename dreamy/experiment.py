@@ -142,37 +142,6 @@ def check_file_exists(s3, bucket, key):
             raise
 
 
-def load_tokenizer():
-    """Load up a Pythia tokenizer. All the pythia models use the same
-    tokenizer."""
-    return transformers.AutoTokenizer.from_pretrained("EleutherAI/pythia-70m-deduped")
-
-
-def load_model(
-    model_size="12b", requires_grad=False, attn_implementation="flash_attention_2"
-):
-    """Load up a Pythia model ready for dreaming."""
-    model_name = f"EleutherAI/pythia-{model_size}-deduped"
-    model = transformers.GPTNeoXForCausalLM.from_pretrained(
-        model_name,
-        low_cpu_mem_usage=True,
-        torch_dtype=torch.float16,
-        use_cache=False,
-        device_map="cuda",
-        attn_implementation=attn_implementation,
-    )
-
-    if not requires_grad:
-        # If we're not optimizing any model parameters so mark the
-        # requires_grad(False). This will dramatically reduce memory
-        # requirements.
-        for name, param in model.named_parameters():
-            param.requires_grad_(False)
-
-    tokenizer = load_tokenizer()
-    return model, tokenizer
-
-
 @dataclasses.dataclass
 class DreamConfig:
     """ """
