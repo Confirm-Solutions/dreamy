@@ -1,6 +1,6 @@
 # Fluent dreaming for language models.
 
-The code here implements the algorithms in the paper [LINK TO ARXIV](http://arxiv).
+The code here implements the algorithms in the paper ["Fluent dreaming for language models"](https://arxiv.org/abs/2402.01702).
 
 [Please also see the companion page that demonstrates using the code here.](https://confirmlabs.org/posts/dreamy.html)
 
